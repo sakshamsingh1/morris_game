@@ -1,14 +1,13 @@
 from morris import baseStaticEstimate, GenerateMovesOpening, GenerateMovesMidgameEndgame
 from utils import readInput, writeOutput, visualize
 
-
 def maxMin(position, depth, num_eval, phase='opening'):
     f = GenerateMovesOpening
     if phase == 'midgame_endgame':
         f = GenerateMovesMidgameEndgame
 
     if depth == 0:
-        curr_obj = baseStaticEstimate(position, player='W', opponent='B')
+        curr_obj = baseStaticEstimate(position)
         if phase == 'opening':
             curr_val = curr_obj.opening_est()
         else:
@@ -19,7 +18,7 @@ def maxMin(position, depth, num_eval, phase='opening'):
     max_move = None
     max_val = float('-inf')
 
-    children = f(position, player='W', opponent='B')
+    children = f(position)
     for move in children:
         _, curr_val, num_eval = minMax(move, depth-1, num_eval, phase=phase)
         if curr_val > max_val:
@@ -34,18 +33,18 @@ def minMax(position, depth, num_eval, phase='opening'):
         f = GenerateMovesMidgameEndgame
 
     if depth == 0:
-        curr_obj = baseStaticEstimate(position, player='B', opponent='W')
+        curr_obj = baseStaticEstimate(position)
         if phase == 'opening':
             curr_val = curr_obj.opening_est()
         else:
             curr_val = curr_obj.midgame_endgame_est()
-        print("Position:", "".join(position), "Value:", curr_val)
+        # print("Position:", "".join(position), "Value:", curr_val)
         return position, curr_val, num_eval + 1
 
     min_move = None
     min_val = float('inf')
 
-    children = f(position, player='B', opponent='W')
+    children = f(position)
     for move in children:
         curr_move, curr_val, num_eval = maxMin(move, depth-1, num_eval, phase=phase)
         if curr_val < min_val:
@@ -91,3 +90,4 @@ def MiniMaxGame(input_file, output_file, depth, visual=False):
     if visual:
         visualize(input_position)
         visualize(best_move)
+

@@ -1,10 +1,64 @@
 
+# def swap(board):
+#     board = "".join(board)
+#     board.replace("W", "B").replace("B", "W")
+#     return list(board)
 
+def swap(board):
+        invertedboard = []
+        for i in board:
+            if i == "W":
+                invertedboard.append("B")
+            elif i == "B":
+                invertedboard.append("W")
+            else:
+                invertedboard.append("x")
+        return invertedboard
 
+def writeOutput(output_file, best_move):
+    with open(output_file, 'w') as f:
+        best_move = "".join(best_move)
+        f.write(best_move)
 
+def readInput(input_file):
+    with open(input_file, 'r') as f:
+        input_position = f.read().strip()
 
+    if len(input_position)!=21:
+        raise ValueError("Input position must be 21 characters long")
+
+    return list(input_position)
 
 def visualize(board):
+    board = list(board)
+    for i in range(len(board)):
+        if board[i] == "x":
+            board[i] = "."
+
+    print(board[18] + "---------------------" + board[19] +
+          "---------------------" + board[20] + "")
+    print("|                     |                     |")
+    print("|       " + board[15] + "-------------" +
+          board[16] + "--------------" + board[17] + "      |")
+    print("|       |             |              |      |")
+    print("|       |         " + board[12] + "---" +
+          board[13] + "---" + board[14] + "          |      |")
+    print("|       |         |       |          |      |")
+    print(board[6] + "-------" + board[7] + "---------" + board[8] + "       " +
+          board[9] + "----------" + board[10] + "------" + board[11] + "")
+    print("|       |         |       |          |      |")
+    print("|       |         " + board[4] + "--" +
+          "-" + "----" + board[5] + "          |      |")
+    print("|       |                            |      |")
+    print("|       " + board[2] + "------------" +
+          "-" + "---------------" + board[3] + "      |")
+    print("|                                           |")
+    print(board[0] + "----------------" + "-" +
+          "--------------------------" + board[1] + "")
+    print("\n")
+
+
+def visualizeBig(board):
     board = list(board)
     for i in range(len(board)):
         if board[i] == "x":
@@ -37,7 +91,6 @@ def visualize(board):
     print(board[0] + "----------------------------" + "-" +
           "--------------------------" + board[1] + "")
     print("\n")
-
 
 
 
@@ -123,15 +176,14 @@ def neighbors(j):
     else:
         raise ValueError(f"Invalid position {j}")
 
-
 def closeMill(j, b):
     C = b[j]
     if C == "x":
         raise ValueError(f"Board at {j} cannot be empty")
     elif j == 0:
-        return (b[6] == C and b[18] == C)
+        return ((b[6] == C) and (b[18] == C))
     elif j == 1:
-        return b[11] == C and b[20] == C
+        return (b[11] == C) and b[20] == C
     elif j == 2:
         return (b[7] == C and b[15] == C)
     elif j == 3:
@@ -149,11 +201,11 @@ def closeMill(j, b):
     elif j == 9:
         return (b[10] == C and b[11] == C) or (b[5] == C and b[14] == C)
     elif j == 10:
-        return (b[5] == C and b[14] == C) or (b[9] == C and b[11] == C)
+        return (b[3] == C and b[17] == C) or (b[9] == C and b[11] == C)
     elif j == 11:
         return (b[1] == C and b[20] == C) or (b[9] == C and b[10] == C)
     elif j == 12:
-        return b[13] == C and b[14] == C
+        return (b[13] == C and b[14] == C) or (b[4] == C and b[8] == C)
     elif j == 13:
         return (b[12] == C and b[14] == C) or (b[16] == C and b[19] == C)
     elif j == 14:
