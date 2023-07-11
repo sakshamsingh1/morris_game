@@ -1,5 +1,6 @@
-from morris import baseStaticEstimate, GenerateMovesOpening, GenerateMovesMidgameEndgame
+from morris import improvedStaticEstimate, GenerateMovesOpening, GenerateMovesMidgameEndgame
 from utils import readInput, writeOutput, visualize
+
 
 def maxMin(position, depth, num_eval, phase='opening'):
     f = GenerateMovesOpening
@@ -7,7 +8,7 @@ def maxMin(position, depth, num_eval, phase='opening'):
         f = GenerateMovesMidgameEndgame
 
     if depth == 0:
-        curr_obj = baseStaticEstimate(position)
+        curr_obj = improvedStaticEstimate(position, player='W', opponent='B', phase=phase)
         if phase == 'opening':
             curr_val = curr_obj.opening_est()
         else:
@@ -18,7 +19,7 @@ def maxMin(position, depth, num_eval, phase='opening'):
     max_move = None
     max_val = float('-inf')
 
-    children = f(position)
+    children = f(position, player='W', opponent='B')
     for move in children:
         _, curr_val, num_eval = minMax(move, depth-1, num_eval, phase=phase)
         if curr_val > max_val:
@@ -33,7 +34,7 @@ def minMax(position, depth, num_eval, phase='opening'):
         f = GenerateMovesMidgameEndgame
 
     if depth == 0:
-        curr_obj = baseStaticEstimate(position)
+        curr_obj = improvedStaticEstimate(position, player='B', opponent='W', phase=phase)
         if phase == 'opening':
             curr_val = curr_obj.opening_est()
         else:
@@ -44,7 +45,7 @@ def minMax(position, depth, num_eval, phase='opening'):
     min_move = None
     min_val = float('inf')
 
-    children = f(position)
+    children = f(position, player='B', opponent='W')
     for move in children:
         curr_move, curr_val, num_eval = maxMin(move, depth-1, num_eval, phase=phase)
         if curr_val < min_val:
@@ -55,7 +56,7 @@ def minMax(position, depth, num_eval, phase='opening'):
 
 
 
-def MiniMaxOpening(input_file, output_file, depth, visual=False):
+def MiniMaxOpeningImproved(input_file, output_file, depth, visual=False):
 
     input_position = readInput(input_file)
 
@@ -74,7 +75,7 @@ def MiniMaxOpening(input_file, output_file, depth, visual=False):
         visualize(best_move)
 
 
-def MiniMaxGame(input_file, output_file, depth, visual=False):
+def MiniMaxGameImproved(input_file, output_file, depth, visual=False):
     input_position = readInput(input_file)
 
     num_eval = 0
@@ -90,4 +91,3 @@ def MiniMaxGame(input_file, output_file, depth, visual=False):
     if visual:
         visualize(input_position)
         visualize(best_move)
-

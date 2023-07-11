@@ -39,7 +39,7 @@ def minMax(position, depth, num_eval, phase='opening'):
             curr_val = curr_obj.opening_est()
         else:
             curr_val = curr_obj.midgame_endgame_est()
-        print("Position:", "".join(position), "Value:", curr_val)
+        # print("Position:", "".join(position), "Value:", curr_val)
         return position, curr_val, num_eval + 1
 
     min_move = None
