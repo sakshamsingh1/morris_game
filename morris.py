@@ -91,13 +91,11 @@ class baseStaticEstimate():
     def opening_est(self):
         return self.num_white - self.num_black
 
-# reference: https://github.com/SidJain1412/9MensMorris
 class improvedStaticEstimate():
     def __init__(self, board, player, opponent, phase="opening"):
         self.num_white = board.count("W")
         self.num_black = board.count("B")
         self.num_possible_mills_1 = self.get_possible_mills(board, player)
-        self.potentialMillsPlayer2 = self.get_pieces_potential_mill_formation(board, opponent)
         self.board = board
         if phase != "opening":
             self.num_black_moves = len(blackGenerateMovesMidgameEndgame(board))
@@ -111,22 +109,20 @@ class improvedStaticEstimate():
             return 10000
         else:
             evaluation = 0
+            evaluation += self.num_white - self.num_black
             if self.num_white < 4:
                 evaluation += 1 * self.num_possible_mills_1
-                evaluation += 2 * self.potentialMillsPlayer2
             else:
                 evaluation += 2 * self.num_possible_mills_1
-                evaluation += 1 * self.potentialMillsPlayer2
         return evaluation
 
     def opening_est(self):
         evaluation = 0
+        evaluation += self.num_white - self.num_black
         if self.num_white < 4 :
             evaluation += 1 * self.num_possible_mills_1
-            evaluation += 2 * self.potentialMillsPlayer2
         else:
             evaluation += 2 * self.num_possible_mills_1
-            evaluation += 1 * self.potentialMillsPlayer2
         return evaluation
 
     def get_possible_mills(self, board, player):
@@ -140,24 +136,24 @@ class improvedStaticEstimate():
                     count += 1
         return count
 
-    def is_potential_mill_formation(self, position, board, player):
-        adjacent_list = neighbors(position)
-
-        for i in adjacent_list:
-            if (board[i] == player) and (not closeMill(position, board)):
-                return True
-        return False
-
-    def get_pieces_potential_mill_formation(self, board, player):
-        count = 0
-
-        for i in range(len(board)):
-            if board[i] == player:
-                adjacent_list = neighbors(i)
-                for pos in adjacent_list:
-                    if board[pos] == "W" and self.is_potential_mill_formation(pos, board, "W"):
-                        count += 1
-        return count
+    # def is_potential_mill_formation(self, position, board, player):
+    #     adjacent_list = neighbors(position)
+    #
+    #     for i in adjacent_list:
+    #         if (board[i] == player) and (not closeMill(position, board)):
+    #             return True
+    #     return False
+    #
+    # def get_pieces_potential_mill_formation(self, board, player):
+    #     count = 0
+    #
+    #     for i in range(len(board)):
+    #         if board[i] == player:
+    #             adjacent_list = neighbors(i)
+    #             for pos in adjacent_list:
+    #                 if board[pos] == "W" and self.is_potential_mill_formation(pos, board, "W"):
+    #                     count += 1
+    #     return count
 
 
 

@@ -1,5 +1,5 @@
 from morris import improvedStaticEstimate, GenerateMovesOpening, GenerateMovesMidgameEndgame
-from utils import readInput, writeOutput, visualize
+from utils import readInput, writeOutput, visualize, swap
 
 
 def maxMin(position, depth, num_eval, phase='opening'):
@@ -74,6 +74,8 @@ def MiniMaxOpeningImproved(input_file, output_file, depth, visual=False):
         visualize(input_position)
         visualize(best_move)
 
+    return best_val
+
 
 def MiniMaxGameImproved(input_file, output_file, depth, visual=False):
     input_position = readInput(input_file)
@@ -91,3 +93,49 @@ def MiniMaxGameImproved(input_file, output_file, depth, visual=False):
     if visual:
         visualize(input_position)
         visualize(best_move)
+
+    return best_val
+
+def MiniMaxOpeningImprovedBlack(input_file, output_file, depth, visual=False):
+
+    input_position = readInput(input_file)
+    input_position = swap(input_position)
+
+    num_eval = 0
+    best_move, best_val, num_eval = maxMin(input_position, depth, num_eval, phase='opening')
+
+    best_move = swap(best_move)
+    writeOutput(output_file, best_move)
+
+    # Print the results
+    print("Board Position:", "".join(best_move))
+    print("Positions evaluated by static estimation:", num_eval)
+    print("MINIMAX estimate:", best_val)
+
+    if visual:
+        visualize(input_position)
+        visualize(best_move)
+
+    return best_val
+
+def MiniMaxGameImprovedBlack(input_file, output_file, depth, visual=False):
+    input_position = readInput(input_file)
+    input_position = swap(input_position)
+
+    num_eval = 0
+    best_move, best_val, num_eval = maxMin(input_position, depth, num_eval, phase='midgame_endgame')
+
+    best_move = swap(best_move)
+    writeOutput(output_file, best_move)
+
+    # Print the results
+    print("Board Position:", "".join(best_move))
+    print("Positions evaluated by static estimation:", num_eval)
+    print("MINIMAX estimate:", best_val)
+
+    if visual:
+        visualize(input_position)
+        visualize(best_move)
+
+    return best_val
+

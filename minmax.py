@@ -74,6 +74,8 @@ def MiniMaxOpening(input_file, output_file, depth, visual=False):
         visualize(input_position)
         visualize(best_move)
 
+    return best_val
+
 
 def MiniMaxGame(input_file, output_file, depth, visual=False):
     input_position = readInput(input_file)
@@ -91,3 +93,5 @@ def MiniMaxGame(input_file, output_file, depth, visual=False):
     if visual:
         visualize(input_position)
         visualize(best_move)
+
+    return best_val

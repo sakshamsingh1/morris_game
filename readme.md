@@ -2,12 +2,26 @@
 Running the code :
 ```
 $ python main.py --input_file <input_file> --output_file <output_file> --depth <depth>
- --mode <mode> --function <function>
+ --visual <visual> --function <function>
 ```
-where, function can be
-1. MiniMaxOpening
-2. MiniMaxGame
-3. ABOpening
-4. ABGame
-5. MiniMaxOpeningImproved
-6. MiniMaxGameImproved
+
+where, 
+
+"input_file" is the path to the input file 
+
+"output_file" is the path to the output file 
+
+"depth" is the depth of the search tree 
+
+"visual" is the flag to enable visualization 
+
+"function" can be one of the following:
+  - MiniMaxOpening 
+  - MiniMaxGame 
+  - ABOpening 
+  - ABGame 
+  - MiniMaxOpeningBlack 
+  - MiniMaxGameBlack 
+  - MiniMaxOpeningImproved 
+  - MiniMaxGameImproved
+
