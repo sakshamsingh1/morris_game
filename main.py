@@ -3,7 +3,7 @@ import argparse
 from minmax import MiniMaxGame, MiniMaxOpening
 from alpha_beta_pruning import ABGame, ABOpening
 from minmax_black import MiniMaxGameBlack, MiniMaxOpeningBlack
-from minmax_improved import MiniMaxGameImproved, MiniMaxOpeningImproved
+from minmax_improved import MiniMaxGameImproved, MiniMaxOpeningImproved, MiniMaxGameImprovedBlack, MiniMaxOpeningImprovedBlack
 
 def main(args):
     visual = args.visual
@@ -35,6 +35,12 @@ def main(args):
     elif args.function == 'MiniMaxGameImproved':
         MiniMaxGameImproved(input_file, output_file, depth, visual)
 
+    elif args.function == 'MiniMaxGameImprovedBlack':
+        MiniMaxGameImprovedBlack(input_file, output_file, depth, visual)
+
+    elif args.function == 'MiniMaxOpeningImprovedBlack':
+        MiniMaxOpeningImprovedBlack(input_file, output_file, depth, visual)
+
     else:
         print("Invalid function name")
 
@@ -42,9 +48,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Parameter Processing')
     parser.add_argument('--input_file', type=str, default='sample_input.txt', help='input file name')
     parser.add_argument('--output_file', type=str, default='sample_output.txt', help='output file name')
-    parser.add_argument('--depth', type=int, default=2, help='depth of search tree')
-    parser.add_argument('--visual', type=bool, default=False, help='visualize the game')
-    parser.add_argument('--function', type=str, default='MiniMaxGameImproved', help='function to run')
+    parser.add_argument('--depth', type=int, default=4, help='depth of search tree')
+    parser.add_argument('--visual', type=bool, default=True, help='visualize the game')
+    parser.add_argument('--function', type=str, default='MiniMaxGameImprovedBlack', help='function to run')
 
     args = parser.parse_args()
     main(args)

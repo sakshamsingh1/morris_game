@@ -1,4 +1,10 @@
 
+Course project for AI course CS 6364 at University of Texas at Dallas
+
+Aim: To implement **Nine Men’s Morris Game**
+
+Problem description is available in the ```project_description``` folder.
+
 Running the code :
 ```
 $ python main.py --input_file <input_file> --output_file <output_file> --depth <depth>
@@ -25,3 +31,4 @@ where,
   - MiniMaxOpeningImproved 
   - MiniMaxGameImproved
 
+```game.py``` Script to play the game:
